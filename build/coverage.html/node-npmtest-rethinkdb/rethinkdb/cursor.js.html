@@ -1,0 +1,2387 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for node-npmtest-rethinkdb/rethinkdb/cursor.js</title>
+    <meta charset="utf-8">
+    <style>
+        body, html {
+            margin:0; padding: 0;
+        }
+        body {
+            font-family: Arial, Helvetica;
+            font-size: 10pt;
+        }
+        div.header, div.footer {
+            background: #eee;
+            padding: 1em;
+        }
+        div.header {
+            height: 160px;
+            padding: 0 1em 0 1em;
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #666;
+            width: 100%;
+        }
+        div.footer {
+            border-top: 1px solid #666;
+        }
+        div.body {
+            margin-top: 170px;
+        }
+        div.meta {
+            font-size: 90%;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        h2 {
+            font-size: 10pt;
+        }
+        pre {
+            font-family: Menlo, Monaco, Consolas, Courier New, monospace;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            tab-size: 2;
+        }
+
+        div.path { font-size: 110%; }
+        div.path a:link, div.path a:visited { color: #000; }
+        table.coverage { border-collapse: collapse; margin:0; padding: 0 }
+
+        table.coverage td {
+            margin: 0;
+            padding: 0;
+            color: #111;
+            vertical-align: top;
+        }
+        table.coverage td.line-count {
+            width: 50px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        table.coverage td.line-coverage {
+            color: #777 !important;
+            text-align: right;
+            border-left: 1px solid #666;
+            border-right: 1px solid #666;
+        }
+
+        table.coverage td.text {
+        }
+
+        table.coverage td span.cline-any {
+            display: inline-block;
+            padding: 0 5px;
+            width: 40px;
+        }
+        table.coverage td span.cline-neutral {
+            background: #eee;
+        }
+        table.coverage td span.cline-yes {
+            background: #b5d592;
+            color: #999;
+        }
+        table.coverage td span.cline-no {
+            background: #fc8c84;
+        }
+
+        .cstat-yes { color: #111; }
+        .cstat-no { background: #fc8c84; color: #111; }
+        .fstat-no { background: #ffc520; color: #111 !important; }
+        .cbranch-no { background:  yellow !important; color: #111; }
+
+        .cstat-skip { background: #ddd; color: #111; }
+        .fstat-skip { background: #ddd; color: #111 !important; }
+        .cbranch-skip { background: #ddd !important; color: #111; }
+
+        .missing-if-branch {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: black;
+            color: yellow;
+        }
+
+        .skip-if-branch {
+            display: none;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: #ccc;
+            color: white;
+        }
+
+        .missing-if-branch .typ, .skip-if-branch .typ {
+            color: inherit !important;
+        }
+
+        .entity, .metric { font-weight: bold; }
+        .metric { display: inline-block; border: 1px solid #333; padding: 0.3em; background: white; }
+        .metric small { font-size: 80%; font-weight: normal; color: #666; }
+
+        div.coverage-summary table { border-collapse: collapse; margin: 3em; font-size: 110%; }
+        div.coverage-summary td, div.coverage-summary table  th { margin: 0; padding: 0.25em 1em; border-top: 1px solid #666; border-bottom: 1px solid #666; }
+        div.coverage-summary th { text-align: left; border: 1px solid #666; background: #eee; font-weight: normal; }
+        div.coverage-summary th.file { border-right: none !important; }
+        div.coverage-summary th.pic { border-left: none !important; text-align: right; }
+        div.coverage-summary th.pct { border-right: none !important; }
+        div.coverage-summary th.abs { border-left: none !important; text-align: right; }
+        div.coverage-summary td.pct { text-align: right; border-left: 1px solid #666; }
+        div.coverage-summary td.abs { text-align: right; font-size: 90%; color: #444; border-right: 1px solid #666; }
+        div.coverage-summary td.file { text-align: right; border-left: 1px solid #666; white-space: nowrap;  }
+        div.coverage-summary td.pic { min-width: 120px !important;  }
+        div.coverage-summary a:link { color: #000; }
+        div.coverage-summary a:visited { color: #333; }
+        div.coverage-summary tfoot td { border-top: 1px solid #666; }
+
+        div.coverage-summary .yui3-datatable-sort-indicator, div.coverage-summary .dummy-sort-indicator {
+            height: 10px;
+            width: 7px;
+            display: inline-block;
+            margin-left: 0.5em;
+        }
+        div.coverage-summary .yui3-datatable-sort-indicator {
+            background: no-repeat scroll 0 0 transparent;
+        }
+        div.coverage-summary .yui3-datatable-sorted .yui3-datatable-sort-indicator {
+            background-position: 0 -20px;
+        }
+        div.coverage-summary .yui3-datatable-sorted-desc .yui3-datatable-sort-indicator {
+            background-position: 0 -10px;
+        }
+
+        .high { background: #b5d592 !important; }
+        .medium { background: #ffe87c !important; }
+        .low { background: #fc8c84 !important; }
+
+        span.cover-fill, span.cover-empty {
+            display:inline-block;
+            border:1px solid #444;
+            background: white;
+            height: 12px;
+        }
+        span.cover-fill {
+            background: #ccc;
+            border-right: 1px solid #444;
+        }
+        span.cover-empty {
+            background: white;
+            border-left: none;
+        }
+        span.cover-full {
+            border-right: none !important;
+        }
+        pre.prettyprint {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .com { color: #999 !important; }
+        .ignore-none { color: #999; font-weight: normal; }
+
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1 style="font-weight: bold;">
+        <a href="https://github.com/npmtest/node-npmtest-rethinkdb">npmtest-rethinkdb (v0.0.1)</a>
+    </h1>
+    <h1>Code coverage report for <span class="entity">node-npmtest-rethinkdb/rethinkdb/cursor.js</span></h1>
+    <h2>
+        
+        Statements: <span class="metric">21.17% <small>(94 / 444)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Branches: <span class="metric">1.25% <small>(2 / 160)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Functions: <span class="metric">8.26% <small>(9 / 109)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Lines: <span class="metric">20.23% <small>(88 / 435)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">node-npmtest-rethinkdb/rethinkdb/</a> &#187; cursor.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718
+719
+720
+721
+722</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Generated by CoffeeScript 1.10.0
+var ArrayResult, AtomFeed, Cursor, EventEmitter, Feed, IterableResult, OrderByLimitFeed, Promise, UnionedFeed, ar, aropt, error, mkErr, protoResponseType, setImmediate, util, varar,
+  bind = <span class="fstat-no" title="function not covered" >function(fn, me){</span> <span class="cstat-no" title="statement not covered" >return <span class="fstat-no" title="function not covered" >function(){</span> <span class="cstat-no" title="statement not covered" >return fn.apply(me, arguments); </span>}; </span>},
+  slice = [].slice,
+  extend = function(child, parent) { for (var key in parent) { <span class="cstat-no" title="statement not covered" >if (hasProp.call(parent, key)) <span class="cstat-no" title="statement not covered" >child[key] = parent[key]; </span></span>} function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+&nbsp;
+error = require('./errors');
+&nbsp;
+util = require('./util');
+&nbsp;
+protoResponseType = require('./proto-def').Response.ResponseType;
+&nbsp;
+Promise = require('bluebird');
+&nbsp;
+EventEmitter = require('events').EventEmitter;
+&nbsp;
+ar = util.ar;
+&nbsp;
+varar = util.varar;
+&nbsp;
+aropt = util.aropt;
+&nbsp;
+mkErr = util.mkErr;
+&nbsp;
+<span class="missing-if-branch" title="else path not taken" >E</span>if (typeof setImmediate === "undefined" || <span class="branch-1 cbranch-no" title="branch not covered" >setImmediate === null)</span> {
+  setImmediate = <span class="fstat-no" title="function not covered" >function(cb) {</span>
+<span class="cstat-no" title="statement not covered" >    return setTimeout(cb, 0);</span>
+  };
+}
+&nbsp;
+IterableResult = (function() {
+  IterableResult.prototype.stackSize = 100;
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function IterableResult(conn, token, opts, root) {</span>
+<span class="cstat-no" title="statement not covered" >    this._eachCb = bind(this._eachCb, this);</span>
+<span class="cstat-no" title="statement not covered" >    this._conn = conn;</span>
+<span class="cstat-no" title="statement not covered" >    this._token = token;</span>
+<span class="cstat-no" title="statement not covered" >    this._opts = opts;</span>
+<span class="cstat-no" title="statement not covered" >    this._root = root;</span>
+<span class="cstat-no" title="statement not covered" >    this._responses = [];</span>
+<span class="cstat-no" title="statement not covered" >    this._responseIndex = 0;</span>
+<span class="cstat-no" title="statement not covered" >    this._outstandingRequests = 1;</span>
+<span class="cstat-no" title="statement not covered" >    this._iterations = 0;</span>
+<span class="cstat-no" title="statement not covered" >    this._endFlag = false;</span>
+<span class="cstat-no" title="statement not covered" >    this._contFlag = false;</span>
+<span class="cstat-no" title="statement not covered" >    this._closeAsap = false;</span>
+<span class="cstat-no" title="statement not covered" >    this._cont = null;</span>
+<span class="cstat-no" title="statement not covered" >    this._cbQueue = [];</span>
+<span class="cstat-no" title="statement not covered" >    this._closeCb = null;</span>
+<span class="cstat-no" title="statement not covered" >    this._closeCbPromise = null;</span>
+<span class="cstat-no" title="statement not covered" >    this.next = this._next;</span>
+  }
+&nbsp;
+  IterableResult.prototype._addResponse = <span class="fstat-no" title="function not covered" >function(response) {</span>
+<span class="cstat-no" title="statement not covered" >    if (response.t === this._type || response.t === protoResponseType.SUCCESS_SEQUENCE) {</span>
+<span class="cstat-no" title="statement not covered" >      if (response.r.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >        this._responses.push(response);</span>
+      }
+    } else {
+<span class="cstat-no" title="statement not covered" >      this._responses.push(response);</span>
+    }
+<span class="cstat-no" title="statement not covered" >    this._outstandingRequests -= 1;</span>
+<span class="cstat-no" title="statement not covered" >    if (response.t !== this._type) {</span>
+<span class="cstat-no" title="statement not covered" >      this._endFlag = true;</span>
+<span class="cstat-no" title="statement not covered" >      if (this._closeCb != null) {</span>
+<span class="cstat-no" title="statement not covered" >        switch (response.t) {</span>
+          case protoResponseType.COMPILE_ERROR:
+<span class="cstat-no" title="statement not covered" >            this._closeCb(mkErr(error.ReqlServerCompileError, response, this._root));</span>
+<span class="cstat-no" title="statement not covered" >            break;</span>
+          case protoResponseType.CLIENT_ERROR:
+<span class="cstat-no" title="statement not covered" >            this._closeCb(mkErr(error.ReqlClientError, response, this._root));</span>
+<span class="cstat-no" title="statement not covered" >            break;</span>
+          case protoResponseType.RUNTIME_ERROR:
+<span class="cstat-no" title="statement not covered" >            this._closeCb(mkErr(util.errorClass(response.e), response, this._root));</span>
+<span class="cstat-no" title="statement not covered" >            break;</span>
+          default:
+<span class="cstat-no" title="statement not covered" >            this._closeCb();</span>
+        }
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    this._contFlag = false;</span>
+<span class="cstat-no" title="statement not covered" >    if (this._closeAsap === false) {</span>
+<span class="cstat-no" title="statement not covered" >      this._promptNext();</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      this.close(this._closeCb);</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return this;</span>
+  };
+&nbsp;
+  IterableResult.prototype._getCallback = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var cb, immediateCb;</span>
+<span class="cstat-no" title="statement not covered" >    this._iterations += 1;</span>
+<span class="cstat-no" title="statement not covered" >    cb = this._cbQueue.shift();</span>
+<span class="cstat-no" title="statement not covered" >    if (this._iterations % this.stackSize === this.stackSize - 1) {</span>
+<span class="cstat-no" title="statement not covered" >      immediateCb = (<span class="fstat-no" title="function not covered" >function(err, row) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return setImmediate(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >          return cb(err, row);</span>
+        });
+      });
+<span class="cstat-no" title="statement not covered" >      return immediateCb;</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      return cb;</span>
+    }
+  };
+&nbsp;
+  IterableResult.prototype._handleRow = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var cb, response, row;</span>
+<span class="cstat-no" title="statement not covered" >    response = this._responses[0];</span>
+<span class="cstat-no" title="statement not covered" >    row = util.recursivelyConvertPseudotype(response.r[this._responseIndex], this._opts);</span>
+<span class="cstat-no" title="statement not covered" >    cb = this._getCallback();</span>
+<span class="cstat-no" title="statement not covered" >    this._responseIndex += 1;</span>
+<span class="cstat-no" title="statement not covered" >    if (this._responseIndex === response.r.length) {</span>
+<span class="cstat-no" title="statement not covered" >      this._responses.shift();</span>
+<span class="cstat-no" title="statement not covered" >      this._responseIndex = 0;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return cb(null, row);</span>
+  };
+&nbsp;
+  IterableResult.prototype.bufferEmpty = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return this._responses.length === 0 || this._responses[0].r.length &lt;= this._responseIndex;</span>
+  };
+&nbsp;
+  IterableResult.prototype._promptNext = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var cb, errType, response;</span>
+<span class="cstat-no" title="statement not covered" >    if (this._closeCbPromise != null) {</span>
+<span class="cstat-no" title="statement not covered" >      cb = this._getCallback();</span>
+<span class="cstat-no" title="statement not covered" >      cb(new error.ReqlDriverError("Cursor is closed."));</span>
+    }
+<span class="cstat-no" title="statement not covered" >    while (this._cbQueue[0] != null) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this.bufferEmpty() === true) {</span>
+<span class="cstat-no" title="statement not covered" >        if (this._endFlag === true) {</span>
+<span class="cstat-no" title="statement not covered" >          cb = this._getCallback();</span>
+<span class="cstat-no" title="statement not covered" >          cb(new error.ReqlDriverError("No more rows in the cursor."));</span>
+        } else <span class="cstat-no" title="statement not covered" >if (this._responses.length &lt;= 1) {</span>
+<span class="cstat-no" title="statement not covered" >          this._promptCont();</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        response = this._responses[0];</span>
+<span class="cstat-no" title="statement not covered" >        if (this._responses.length === 1) {</span>
+<span class="cstat-no" title="statement not covered" >          this._promptCont();</span>
+        }
+<span class="cstat-no" title="statement not covered" >        switch (response.t) {</span>
+          case protoResponseType.SUCCESS_PARTIAL:
+<span class="cstat-no" title="statement not covered" >            this._handleRow();</span>
+<span class="cstat-no" title="statement not covered" >            break;</span>
+          case protoResponseType.SUCCESS_SEQUENCE:
+<span class="cstat-no" title="statement not covered" >            if (response.r.length === 0) {</span>
+<span class="cstat-no" title="statement not covered" >              this._responses.shift();</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >              this._handleRow();</span>
+            }
+<span class="cstat-no" title="statement not covered" >            break;</span>
+          case protoResponseType.COMPILE_ERROR:
+<span class="cstat-no" title="statement not covered" >            this._responses.shift();</span>
+<span class="cstat-no" title="statement not covered" >            cb = this._getCallback();</span>
+<span class="cstat-no" title="statement not covered" >            cb(mkErr(error.ReqlServerCompileError, response, this._root));</span>
+<span class="cstat-no" title="statement not covered" >            break;</span>
+          case protoResponseType.CLIENT_ERROR:
+<span class="cstat-no" title="statement not covered" >            this._responses.shift();</span>
+<span class="cstat-no" title="statement not covered" >            cb = this._getCallback();</span>
+<span class="cstat-no" title="statement not covered" >            cb(mkErr(error.ReqlClientError, response, this._root));</span>
+<span class="cstat-no" title="statement not covered" >            break;</span>
+          case protoResponseType.RUNTIME_ERROR:
+<span class="cstat-no" title="statement not covered" >            this._responses.shift();</span>
+<span class="cstat-no" title="statement not covered" >            cb = this._getCallback();</span>
+<span class="cstat-no" title="statement not covered" >            errType = util.errorClass(response.e);</span>
+<span class="cstat-no" title="statement not covered" >            cb(mkErr(errType, response, this._root));</span>
+<span class="cstat-no" title="statement not covered" >            break;</span>
+          default:
+<span class="cstat-no" title="statement not covered" >            this._responses.shift();</span>
+<span class="cstat-no" title="statement not covered" >            cb = this._getCallback();</span>
+<span class="cstat-no" title="statement not covered" >            cb(new error.ReqlDriverError("Unknown response type for cursor"));</span>
+        }
+      }
+    }
+  };
+&nbsp;
+  IterableResult.prototype._promptCont = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    if ((!this._contFlag) &amp;&amp; (!this._endFlag) &amp;&amp; this._conn.isOpen()) {</span>
+<span class="cstat-no" title="statement not covered" >      this._contFlag = true;</span>
+<span class="cstat-no" title="statement not covered" >      this._outstandingRequests += 1;</span>
+<span class="cstat-no" title="statement not covered" >      return this._conn._continueQuery(this._token);</span>
+    }
+  };
+&nbsp;
+  IterableResult.prototype.hasNext = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    throw new error.ReqlDriverError("The `hasNext` command has been removed since 1.13. Use `next` instead.");</span>
+  };
+&nbsp;
+  IterableResult.prototype._next = varar(0, 1, <span class="fstat-no" title="function not covered" >function(cb) {</span>
+<span class="cstat-no" title="statement not covered" >    var fn;</span>
+<span class="cstat-no" title="statement not covered" >    if ((cb != null) &amp;&amp; typeof cb !== "function") {</span>
+<span class="cstat-no" title="statement not covered" >      throw new error.ReqlDriverError("First argument to `next` must be a function or undefined.");</span>
+    }
+<span class="cstat-no" title="statement not covered" >    fn = (<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >      return <span class="fstat-no" title="function not covered" >function(cb) {</span></span>
+<span class="cstat-no" title="statement not covered" >        _this._cbQueue.push(cb);</span>
+<span class="cstat-no" title="statement not covered" >        return _this._promptNext();</span>
+      };
+    })(this);
+<span class="cstat-no" title="statement not covered" >    return Promise.fromNode(fn).nodeify(cb);</span>
+  });
+&nbsp;
+  IterableResult.prototype.close = varar(0, 1, <span class="fstat-no" title="function not covered" >function(cb) {</span>
+<span class="cstat-no" title="statement not covered" >    if (this._closeCbPromise != null) {</span>
+<span class="cstat-no" title="statement not covered" >      if (this._closeCbPromise.isPending()) {</span>
+<span class="cstat-no" title="statement not covered" >        this._closeCbPromise = this._closeCbPromise.nodeify(cb);</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        this._closeCbPromise = Promise.resolve().nodeify(cb);</span>
+      }
+    } else {
+<span class="cstat-no" title="statement not covered" >      if (this._endFlag) {</span>
+<span class="cstat-no" title="statement not covered" >        this._closeCbPromise = Promise.resolve().nodeify(cb);</span>
+<span class="cstat-no" title="statement not covered" >        this._responses = [];</span>
+<span class="cstat-no" title="statement not covered" >        this._responseIndex = 0;</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        this._closeCbPromise = new Promise((<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >          return <span class="fstat-no" title="function not covered" >function(resolve, reject) {</span></span>
+<span class="cstat-no" title="statement not covered" >            _this._closeCb = <span class="fstat-no" title="function not covered" >function(err) {</span></span>
+<span class="cstat-no" title="statement not covered" >              _this._responses = [];</span>
+<span class="cstat-no" title="statement not covered" >              _this._responseIndex = 0;</span>
+<span class="cstat-no" title="statement not covered" >              while (_this._cbQueue.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >                _this._cbQueue.shift();</span>
+              }
+<span class="cstat-no" title="statement not covered" >              _this._outstandingRequests = 0;</span>
+<span class="cstat-no" title="statement not covered" >              if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                return reject(err);</span>
+              } else {
+<span class="cstat-no" title="statement not covered" >                return resolve();</span>
+              }
+            };
+<span class="cstat-no" title="statement not covered" >            _this._closeAsap = true;</span>
+<span class="cstat-no" title="statement not covered" >            _this._outstandingRequests += 1;</span>
+<span class="cstat-no" title="statement not covered" >            return _this._conn._endQuery(_this._token);</span>
+          };
+        })(this)).nodeify(cb);
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    return this._closeCbPromise;</span>
+  });
+&nbsp;
+  IterableResult.prototype.each = varar(1, 2, <span class="fstat-no" title="function not covered" >function(cb, onFinished) {</span>
+<span class="cstat-no" title="statement not covered" >    var nextCb, self;</span>
+<span class="cstat-no" title="statement not covered" >    if (typeof cb !== 'function') {</span>
+<span class="cstat-no" title="statement not covered" >      throw new error.ReqlDriverError("First argument to each must be a function.");</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if ((onFinished != null) &amp;&amp; typeof onFinished !== 'function') {</span>
+<span class="cstat-no" title="statement not covered" >      throw new error.ReqlDriverError("Optional second argument to each must be a function.");</span>
+    }
+<span class="cstat-no" title="statement not covered" >    self = this;</span>
+<span class="cstat-no" title="statement not covered" >    nextCb = (<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >      return <span class="fstat-no" title="function not covered" >function(err, data) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (err != null) {</span>
+<span class="cstat-no" title="statement not covered" >          if (err.message === 'No more rows in the cursor.') {</span>
+<span class="cstat-no" title="statement not covered" >            return typeof onFinished === "function" ? onFinished() : void 0;</span>
+          } else {
+<span class="cstat-no" title="statement not covered" >            return cb(err);</span>
+          }
+        } else <span class="cstat-no" title="statement not covered" >if (cb(null, data) !== false) {</span>
+<span class="cstat-no" title="statement not covered" >          return _this._next(nextCb);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          return typeof onFinished === "function" ? onFinished() : void 0;</span>
+        }
+      };
+    })(this);
+<span class="cstat-no" title="statement not covered" >    return this._next(nextCb);</span>
+  });
+&nbsp;
+  IterableResult.prototype.eachAsync = varar(1, 3, <span class="fstat-no" title="function not covered" >function(cb, errCb, options) {</span>
+<span class="cstat-no" title="statement not covered" >    var nextCb, pending, resPromise, userCb;</span>
+<span class="cstat-no" title="statement not covered" >    if (options == null) {</span>
+<span class="cstat-no" title="statement not covered" >      options = {</span>
+        concurrency: 1
+      };
+    }
+<span class="cstat-no" title="statement not covered" >    if (typeof cb !== 'function') {</span>
+<span class="cstat-no" title="statement not covered" >      throw new error.ReqlDriverError('First argument to eachAsync must be a function.');</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (errCb != null) {</span>
+<span class="cstat-no" title="statement not covered" >      if (typeof errCb === 'object') {</span>
+<span class="cstat-no" title="statement not covered" >        options = errCb;</span>
+<span class="cstat-no" title="statement not covered" >        errCb = void 0;</span>
+      } else <span class="cstat-no" title="statement not covered" >if (typeof errCb !== 'function') {</span>
+<span class="cstat-no" title="statement not covered" >        throw new error.ReqlDriverError("Optional second argument to eachAsync must be a function or `options` object");</span>
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    if (!(options &amp;&amp; typeof options.concurrency === 'number' &amp;&amp; options.concurrency &gt; 0)) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new error.ReqlDriverError("Optional `options.concurrency` argument to eachAsync must be a positive number");</span>
+    }
+<span class="cstat-no" title="statement not covered" >    pending = [];</span>
+<span class="cstat-no" title="statement not covered" >    userCb = <span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >      var doneChecking, handlerArg, handlerCalled, ret;</span>
+<span class="cstat-no" title="statement not covered" >      if (cb.length &lt;= 1) {</span>
+<span class="cstat-no" title="statement not covered" >        ret = Promise.resolve(cb(data));</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        handlerCalled = false;</span>
+<span class="cstat-no" title="statement not covered" >        doneChecking = false;</span>
+<span class="cstat-no" title="statement not covered" >        handlerArg = void 0;</span>
+<span class="cstat-no" title="statement not covered" >        ret = Promise.fromNode(<span class="fstat-no" title="function not covered" >function(handler) {</span></span>
+<span class="cstat-no" title="statement not covered" >          var asyncRet;</span>
+<span class="cstat-no" title="statement not covered" >          asyncRet = cb(data, <span class="fstat-no" title="function not covered" >function(err) {</span></span>
+<span class="cstat-no" title="statement not covered" >            handlerCalled = true;</span>
+<span class="cstat-no" title="statement not covered" >            if (doneChecking) {</span>
+<span class="cstat-no" title="statement not covered" >              return handler(err);</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >              return handlerArg = err;</span>
+            }
+          });
+<span class="cstat-no" title="statement not covered" >          if (asyncRet !== void 0) {</span>
+<span class="cstat-no" title="statement not covered" >            handler(new error.ReqlDriverError("A two-argument row handler for eachAsync may only return undefined."));</span>
+          } else <span class="cstat-no" title="statement not covered" >if (handlerCalled) {</span>
+<span class="cstat-no" title="statement not covered" >            handler(handlerArg);</span>
+          }
+<span class="cstat-no" title="statement not covered" >          return doneChecking = true;</span>
+        });
+      }
+<span class="cstat-no" title="statement not covered" >      return ret.then(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (data === void 0 || typeof data === Promise) {</span>
+<span class="cstat-no" title="statement not covered" >          return data;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        throw new error.ReqlDriverError("Row handler for eachAsync may only return a Promise or undefined.");</span>
+      });
+    };
+<span class="cstat-no" title="statement not covered" >    nextCb = (<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >      return <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (_this._closeCbPromise != null) {</span>
+<span class="cstat-no" title="statement not covered" >          return Promise.resolve().then(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >            throw new error.ReqlDriverError("Cursor is closed.");</span>
+          });
+        } else {
+<span class="cstat-no" title="statement not covered" >          return _this._next().then(<span class="fstat-no" title="function not covered" >function(data) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if (pending.length &lt; options.concurrency) {</span>
+<span class="cstat-no" title="statement not covered" >              return data;</span>
+            }
+<span class="cstat-no" title="statement not covered" >            return Promise.any(pending)["catch"](Promise.AggregateError, <span class="fstat-no" title="function not covered" >function(errs) {</span></span>
+<span class="cstat-no" title="statement not covered" >              throw errs[0];</span>
+            })["return"](data);
+          }).then(<span class="fstat-no" title="function not covered" >function(data) {</span>
+<span class="cstat-no" title="statement not covered" >            var p;</span>
+<span class="cstat-no" title="statement not covered" >            p = userCb(data).then(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >              return pending.splice(pending.indexOf(p), 1);</span>
+            });
+<span class="cstat-no" title="statement not covered" >            return pending.push(p);</span>
+          }).then(nextCb)["catch"](<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >            if ((err != null ? err.message : void 0) !== 'No more rows in the cursor.') {</span>
+<span class="cstat-no" title="statement not covered" >              throw err;</span>
+            }
+<span class="cstat-no" title="statement not covered" >            return Promise.all(pending);</span>
+          });
+        }
+      };
+    })(this);
+<span class="cstat-no" title="statement not covered" >    resPromise = nextCb().then(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >      if (errCb != null) {</span>
+<span class="cstat-no" title="statement not covered" >        return errCb(null);</span>
+      }
+    })["catch"](<span class="fstat-no" title="function not covered" >function(err) {</span>
+<span class="cstat-no" title="statement not covered" >      if (errCb != null) {</span>
+<span class="cstat-no" title="statement not covered" >        return errCb(err);</span>
+      }
+<span class="cstat-no" title="statement not covered" >      throw err;</span>
+    });
+<span class="cstat-no" title="statement not covered" >    if (errCb == null) {</span>
+<span class="cstat-no" title="statement not covered" >      return resPromise;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return null;</span>
+  });
+&nbsp;
+  IterableResult.prototype._each = IterableResult.prototype.each;
+&nbsp;
+  IterableResult.prototype._eachAsync = IterableResult.prototype.eachAsync;
+&nbsp;
+  IterableResult.prototype.toArray = varar(0, 1, <span class="fstat-no" title="function not covered" >function(cb) {</span>
+<span class="cstat-no" title="statement not covered" >    var results, wrapper;</span>
+<span class="cstat-no" title="statement not covered" >    if ((cb != null) &amp;&amp; typeof cb !== 'function') {</span>
+<span class="cstat-no" title="statement not covered" >      throw new error.ReqlDriverCompileError("First argument to `toArray` must be a function or undefined.");</span>
+    }
+<span class="cstat-no" title="statement not covered" >    results = [];</span>
+<span class="cstat-no" title="statement not covered" >    wrapper = (<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >      return <span class="fstat-no" title="function not covered" >function(res) {</span></span>
+<span class="cstat-no" title="statement not covered" >        results.push(res);</span>
+<span class="cstat-no" title="statement not covered" >        return void 0;</span>
+      };
+    })(this);
+<span class="cstat-no" title="statement not covered" >    return this.eachAsync(wrapper).then((<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >      return <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >        return results;</span>
+      };
+    })(this)).nodeify(cb);
+  });
+&nbsp;
+  IterableResult.prototype._makeEmitter = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    this.emitter = new EventEmitter;</span>
+<span class="cstat-no" title="statement not covered" >    this.each = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >      throw new error.ReqlDriverError("You cannot use the cursor interface and the EventEmitter interface at the same time.");</span>
+    };
+<span class="cstat-no" title="statement not covered" >    return this.next = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >      throw new error.ReqlDriverError("You cannot use the cursor interface and the EventEmitter interface at the same time.");</span>
+    };
+  };
+&nbsp;
+  IterableResult.prototype.addListener = <span class="fstat-no" title="function not covered" >function(event, listener) {</span>
+<span class="cstat-no" title="statement not covered" >    if (this.emitter == null) {</span>
+<span class="cstat-no" title="statement not covered" >      this._makeEmitter();</span>
+<span class="cstat-no" title="statement not covered" >      setImmediate((<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >          return _this._each(_this._eachCb);</span>
+        };
+      })(this));
+    }
+<span class="cstat-no" title="statement not covered" >    return this.emitter.addListener(event, listener);</span>
+  };
+&nbsp;
+  IterableResult.prototype.on = <span class="fstat-no" title="function not covered" >function(event, listener) {</span>
+<span class="cstat-no" title="statement not covered" >    if (this.emitter == null) {</span>
+<span class="cstat-no" title="statement not covered" >      this._makeEmitter();</span>
+<span class="cstat-no" title="statement not covered" >      setImmediate((<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >          return _this._each(_this._eachCb);</span>
+        };
+      })(this));
+    }
+<span class="cstat-no" title="statement not covered" >    return this.emitter.on(event, listener);</span>
+  };
+&nbsp;
+  IterableResult.prototype.once = <span class="fstat-no" title="function not covered" >function(event, listener) {</span>
+<span class="cstat-no" title="statement not covered" >    if (this.emitter == null) {</span>
+<span class="cstat-no" title="statement not covered" >      this._makeEmitter();</span>
+<span class="cstat-no" title="statement not covered" >      setImmediate((<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >          return _this._each(_this._eachCb);</span>
+        };
+      })(this));
+    }
+<span class="cstat-no" title="statement not covered" >    return this.emitter.once(event, listener);</span>
+  };
+&nbsp;
+  IterableResult.prototype.removeListener = <span class="fstat-no" title="function not covered" >function(event, listener) {</span>
+<span class="cstat-no" title="statement not covered" >    if (this.emitter == null) {</span>
+<span class="cstat-no" title="statement not covered" >      this._makeEmitter();</span>
+<span class="cstat-no" title="statement not covered" >      setImmediate((<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >          return _this._each(_this._eachCb);</span>
+        };
+      })(this));
+    }
+<span class="cstat-no" title="statement not covered" >    return this.emitter.removeListener(event, listener);</span>
+  };
+&nbsp;
+  IterableResult.prototype.removeAllListeners = <span class="fstat-no" title="function not covered" >function(event) {</span>
+<span class="cstat-no" title="statement not covered" >    if (this.emitter == null) {</span>
+<span class="cstat-no" title="statement not covered" >      this._makeEmitter();</span>
+<span class="cstat-no" title="statement not covered" >      setImmediate((<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >          return _this._each(_this._eachCb);</span>
+        };
+      })(this));
+    }
+<span class="cstat-no" title="statement not covered" >    return this.emitter.removeAllListeners(event);</span>
+  };
+&nbsp;
+  IterableResult.prototype.setMaxListeners = <span class="fstat-no" title="function not covered" >function(n) {</span>
+<span class="cstat-no" title="statement not covered" >    if (this.emitter == null) {</span>
+<span class="cstat-no" title="statement not covered" >      this._makeEmitter();</span>
+<span class="cstat-no" title="statement not covered" >      setImmediate((<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >          return _this._each(_this._eachCb);</span>
+        };
+      })(this));
+    }
+<span class="cstat-no" title="statement not covered" >    return this.emitter.setMaxListeners(n);</span>
+  };
+&nbsp;
+  IterableResult.prototype.listeners = <span class="fstat-no" title="function not covered" >function(event) {</span>
+<span class="cstat-no" title="statement not covered" >    if (this.emitter == null) {</span>
+<span class="cstat-no" title="statement not covered" >      this._makeEmitter();</span>
+<span class="cstat-no" title="statement not covered" >      setImmediate((<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >          return _this._each(_this._eachCb);</span>
+        };
+      })(this));
+    }
+<span class="cstat-no" title="statement not covered" >    return this.emitter.listeners(event);</span>
+  };
+&nbsp;
+  IterableResult.prototype.emit = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    var args, ref;</span>
+<span class="cstat-no" title="statement not covered" >    args = 1 &lt;= arguments.length ? slice.call(arguments, 0) : [];</span>
+<span class="cstat-no" title="statement not covered" >    if (this.emitter == null) {</span>
+<span class="cstat-no" title="statement not covered" >      this._makeEmitter();</span>
+<span class="cstat-no" title="statement not covered" >      setImmediate((<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >        return <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >          return _this._each(_this._eachCb);</span>
+        };
+      })(this));
+    }
+<span class="cstat-no" title="statement not covered" >    return (ref = this.emitter).emit.apply(ref, args);</span>
+  };
+&nbsp;
+  IterableResult.prototype._eachCb = <span class="fstat-no" title="function not covered" >function(err, data) {</span>
+<span class="cstat-no" title="statement not covered" >    if (err != null) {</span>
+<span class="cstat-no" title="statement not covered" >      return this.emitter.emit('error', err);</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      return this.emitter.emit('data', data);</span>
+    }
+  };
+&nbsp;
+  return IterableResult;
+&nbsp;
+})();
+&nbsp;
+Cursor = (function(superClass) {
+  extend(Cursor, superClass);
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function Cursor() {</span>
+<span class="cstat-no" title="statement not covered" >    this._type = protoResponseType.SUCCESS_PARTIAL;</span>
+<span class="cstat-no" title="statement not covered" >    Cursor.__super__.constructor.apply(this, arguments);</span>
+  }
+&nbsp;
+  Cursor.prototype.toString = ar(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return "[object Cursor]";</span>
+  });
+&nbsp;
+  return Cursor;
+&nbsp;
+})(IterableResult);
+&nbsp;
+Feed = (function(superClass) {
+  extend(Feed, superClass);
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function Feed() {</span>
+<span class="cstat-no" title="statement not covered" >    this._type = protoResponseType.SUCCESS_PARTIAL;</span>
+<span class="cstat-no" title="statement not covered" >    Feed.__super__.constructor.apply(this, arguments);</span>
+  }
+&nbsp;
+  Feed.prototype.hasNext = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    throw new error.ReqlDriverError("`hasNext` is not available for feeds.");</span>
+  };
+&nbsp;
+  Feed.prototype.toArray = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    throw new error.ReqlDriverError("`toArray` is not available for feeds.");</span>
+  };
+&nbsp;
+  Feed.prototype.toString = ar(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return "[object Feed]";</span>
+  });
+&nbsp;
+  return Feed;
+&nbsp;
+})(IterableResult);
+&nbsp;
+UnionedFeed = (function(superClass) {
+  extend(UnionedFeed, superClass);
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function UnionedFeed() {</span>
+<span class="cstat-no" title="statement not covered" >    this._type = protoResponseType.SUCCESS_PARTIAL;</span>
+<span class="cstat-no" title="statement not covered" >    UnionedFeed.__super__.constructor.apply(this, arguments);</span>
+  }
+&nbsp;
+  UnionedFeed.prototype.hasNext = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    throw new error.ReqlDriverError("`hasNext` is not available for feeds.");</span>
+  };
+&nbsp;
+  UnionedFeed.prototype.toArray = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    throw new error.ReqlDriverError("`toArray` is not available for feeds.");</span>
+  };
+&nbsp;
+  UnionedFeed.prototype.toString = ar(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return "[object UnionedFeed]";</span>
+  });
+&nbsp;
+  return UnionedFeed;
+&nbsp;
+})(IterableResult);
+&nbsp;
+AtomFeed = (function(superClass) {
+  extend(AtomFeed, superClass);
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function AtomFeed() {</span>
+<span class="cstat-no" title="statement not covered" >    this._type = protoResponseType.SUCCESS_PARTIAL;</span>
+<span class="cstat-no" title="statement not covered" >    AtomFeed.__super__.constructor.apply(this, arguments);</span>
+  }
+&nbsp;
+  AtomFeed.prototype.hasNext = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    throw new error.ReqlDriverError("`hasNext` is not available for feeds.");</span>
+  };
+&nbsp;
+  AtomFeed.prototype.toArray = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    throw new error.ReqlDriverError("`toArray` is not available for feeds.");</span>
+  };
+&nbsp;
+  AtomFeed.prototype.toString = ar(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return "[object AtomFeed]";</span>
+  });
+&nbsp;
+  return AtomFeed;
+&nbsp;
+})(IterableResult);
+&nbsp;
+OrderByLimitFeed = (function(superClass) {
+  extend(OrderByLimitFeed, superClass);
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function OrderByLimitFeed() {</span>
+<span class="cstat-no" title="statement not covered" >    this._type = protoResponseType.SUCCESS_PARTIAL;</span>
+<span class="cstat-no" title="statement not covered" >    OrderByLimitFeed.__super__.constructor.apply(this, arguments);</span>
+  }
+&nbsp;
+  OrderByLimitFeed.prototype.hasNext = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    throw new error.ReqlDriverError("`hasNext` is not available for feeds.");</span>
+  };
+&nbsp;
+  OrderByLimitFeed.prototype.toArray = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    throw new error.ReqlDriverError("`toArray` is not available for feeds.");</span>
+  };
+&nbsp;
+  OrderByLimitFeed.prototype.toString = ar(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    return "[object OrderByLimitFeed]";</span>
+  });
+&nbsp;
+  return OrderByLimitFeed;
+&nbsp;
+})(IterableResult);
+&nbsp;
+ArrayResult = (function(superClass) {
+  extend(ArrayResult, superClass);
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function ArrayResult() {</span>
+<span class="cstat-no" title="statement not covered" >    return ArrayResult.__super__.constructor.apply(this, arguments);</span>
+  }
+&nbsp;
+  ArrayResult.prototype._hasNext = ar(<span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >    if (this.__index == null) {</span>
+<span class="cstat-no" title="statement not covered" >      this.__index = 0;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return this.__index &lt; this.length;</span>
+  });
+&nbsp;
+  ArrayResult.prototype._next = varar(0, 1, <span class="fstat-no" title="function not covered" >function(cb) {</span>
+<span class="cstat-no" title="statement not covered" >    var fn;</span>
+<span class="cstat-no" title="statement not covered" >    fn = (<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >      return <span class="fstat-no" title="function not covered" >function(cb) {</span></span>
+<span class="cstat-no" title="statement not covered" >        var self;</span>
+<span class="cstat-no" title="statement not covered" >        if (_this._closeCbPromise != null) {</span>
+<span class="cstat-no" title="statement not covered" >          cb(new error.ReqlDriverError("Cursor is closed."));</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (_this._hasNext() === true) {</span>
+<span class="cstat-no" title="statement not covered" >          self = _this;</span>
+<span class="cstat-no" title="statement not covered" >          if (self.__index % _this.stackSize === _this.stackSize - 1) {</span>
+<span class="cstat-no" title="statement not covered" >            return setImmediate(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >              return cb(null, self[self.__index++]);</span>
+            });
+          } else {
+<span class="cstat-no" title="statement not covered" >            return cb(null, self[self.__index++]);</span>
+          }
+        } else {
+<span class="cstat-no" title="statement not covered" >          return cb(new error.ReqlDriverError("No more rows in the cursor."));</span>
+        }
+      };
+    })(this);
+<span class="cstat-no" title="statement not covered" >    return Promise.fromNode(fn).nodeify(cb);</span>
+  });
+&nbsp;
+  ArrayResult.prototype.toArray = varar(0, 1, <span class="fstat-no" title="function not covered" >function(cb) {</span>
+<span class="cstat-no" title="statement not covered" >    var fn;</span>
+<span class="cstat-no" title="statement not covered" >    fn = (<span class="fstat-no" title="function not covered" >function(_this) {</span></span>
+<span class="cstat-no" title="statement not covered" >      return <span class="fstat-no" title="function not covered" >function(cb) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (_this._closeCbPromise != null) {</span>
+<span class="cstat-no" title="statement not covered" >          cb(new error.ReqlDriverError("Cursor is closed."));</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (_this.__index != null) {</span>
+<span class="cstat-no" title="statement not covered" >          return cb(null, _this.slice(_this.__index, _this.length));</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          return cb(null, _this);</span>
+        }
+      };
+    })(this);
+<span class="cstat-no" title="statement not covered" >    return Promise.fromNode(fn).nodeify(cb);</span>
+  });
+&nbsp;
+  ArrayResult.prototype.close = varar(0, 1, <span class="fstat-no" title="function not covered" >function(cb) {</span>
+<span class="cstat-no" title="statement not covered" >    this.length = 0;</span>
+<span class="cstat-no" title="statement not covered" >    this.__index = 0;</span>
+<span class="cstat-no" title="statement not covered" >    this._closeCbPromise = Promise.resolve().nodeify(cb);</span>
+<span class="cstat-no" title="statement not covered" >    return this._closeCbPromise;</span>
+  });
+&nbsp;
+  ArrayResult.prototype.makeIterable = <span class="fstat-no" title="function not covered" >function(response) {</span>
+<span class="cstat-no" title="statement not covered" >    var method, name, ref;</span>
+<span class="cstat-no" title="statement not covered" >    response.__proto__ = {};</span>
+<span class="cstat-no" title="statement not covered" >    ref = ArrayResult.prototype;</span>
+<span class="cstat-no" title="statement not covered" >    for (name in ref) {</span>
+<span class="cstat-no" title="statement not covered" >      method = ref[name];</span>
+<span class="cstat-no" title="statement not covered" >      if (name !== 'constructor') {</span>
+<span class="cstat-no" title="statement not covered" >        if (name === '_next') {</span>
+<span class="cstat-no" title="statement not covered" >          response.__proto__['next'] = method;</span>
+<span class="cstat-no" title="statement not covered" >          response.__proto__['_next'] = method;</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          response.__proto__[name] = method;</span>
+        }
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    response.__proto__.__proto__ = [].__proto__;</span>
+<span class="cstat-no" title="statement not covered" >    return response;</span>
+  };
+&nbsp;
+  return ArrayResult;
+&nbsp;
+})(IterableResult);
+&nbsp;
+module.exports.Cursor = Cursor;
+&nbsp;
+module.exports.Feed = Feed;
+&nbsp;
+module.exports.AtomFeed = AtomFeed;
+&nbsp;
+module.exports.OrderByLimitFeed = OrderByLimitFeed;
+&nbsp;
+module.exports.makeIterable = ArrayResult.prototype.makeIterable;
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a> at Tue Apr 11 2017 13:59:05 GMT+0000 (UTC)</div>
+</div>
+</body>
+</html>
