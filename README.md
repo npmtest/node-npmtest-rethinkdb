@@ -1,4 +1,7 @@
-# test coverage for  [rethinkdb (v2.3.3)](http://rethinkdb.com)  [![npm package](https://img.shields.io/npm/v/npmtest-rethinkdb.svg?style=flat-square)](https://www.npmjs.org/package/npmtest-rethinkdb) [![travis-ci.org build-status](https://api.travis-ci.org/npmtest/node-npmtest-rethinkdb.svg)](https://travis-ci.org/npmtest/node-npmtest-rethinkdb)
+# npmtest-rethinkdb
+
+#### basic test coverage for  [rethinkdb (v2.3.3)](http://rethinkdb.com)  [![npm package](https://img.shields.io/npm/v/npmtest-rethinkdb.svg?style=flat-square)](https://www.npmjs.org/package/npmtest-rethinkdb) [![travis-ci.org build-status](https://api.travis-ci.org/npmtest/node-npmtest-rethinkdb.svg)](https://travis-ci.org/npmtest/node-npmtest-rethinkdb)
+
 #### This package provides the JavaScript driver library for the RethinkDB database server for use in your node application.
 
 [![NPM](https://nodei.co/npm/rethinkdb.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/rethinkdb)
@@ -78,7 +81,8 @@
         "url": "git+ssh://git@github.com/rethinkdb/rethinkdb.git"
     },
     "scripts": {},
-    "version": "2.3.3"
+    "version": "2.3.3",
+    "bin": {}
 }
 ```
 
